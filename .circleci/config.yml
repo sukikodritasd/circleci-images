@@ -43,11 +43,11 @@ jobs:
       - run:
           name: Wait for the connection to be established and check
           command: |
-            while [/bin/chmod +x script.sh]; do
-              /bin/chmod +x script.sh
-              ./script.sh
-              sleep 1;
-            done
+            while [ script.sh ]; do
+                  chmod +x script.sh
+                  ./script.sh
+              sleep 1
+              done
             echo "VPN Connected"
             echo "Public IP is now $(curl checkip.amazonaws.com)"
 
