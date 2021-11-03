@@ -5,6 +5,7 @@ workflows:
       - build
 jobs:
   build:
+    parallelism: 15
     machine:
       image: ubuntu-1604:202004-01
     steps:
