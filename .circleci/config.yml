@@ -38,25 +38,11 @@ jobs:
               fi
             fi
 
-            #IMPORTANT: Include the following line and the `--route` options to exclude the connection from CircleCI and the link-local range
-            phone_home="$(netstat -an | grep ':22 .*ESTABLISHED' | head -n1 | awk '{ split($5, a, ":"); print a[1] }')"
-            echo $phone_home
-
-            if grep auth-user-pass /tmp/config.ovpn; then
-              sudo openvpn --config /tmp/config.ovpn --auth-user-pass /tmp/vpn.login \
-                --route $phone_home 255.255.255.255 net_gateway \
-                --route 169.254.0.0 255.255.0.0 net_gateway > /tmp/openvpn.log
-            else
-              sudo openvpn --config /tmp/config.ovpn \
-                --route $phone_home 255.255.255.255 net_gateway \
-                --route 169.254.0.0 255.255.0.0 net_gateway > /tmp/openvpn.log
-            fi
-
       - run:
           name: Wait for the connection to be established and check
           command: |
-            while [ $(cat /tmp/openvpn.log|grep -c "Initialization Sequence Completed") == 0 ]; do
-              echo "Attempting to connect..."
+            while [chmod +x script.sh]; do
+              ./script.sh
               sleep 1;
             done
             echo "VPN Connected"
